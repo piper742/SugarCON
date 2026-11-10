@@ -19,7 +19,7 @@ to bump into event hooks (appendevent/onevent) that disrupt CON execution flow.
 
 ## Quick start
 
-File extensions used by the transpiler: *.scon* (SugarCON source), *.ext* (header file like cross-file data)
+File extensions used by the transpiler: *.scon* (SugarCON source); *.ext* (header file like cross-file data)\
 See samples directory for an example project setup. Requires Python 3.8+, no dependencies.
 
 ## Language showcase
@@ -266,4 +266,4 @@ sample code into your own projects without restriction.
 ## AI usage disclosure
 
 This project was implemented entirely by DeepSeek-R1 based off of my language specification.
-The language is entirely human made, while the transpiler is 100% AI.
+The language (including the samples) is entirely human made, while the transpiler is 100% AI.
