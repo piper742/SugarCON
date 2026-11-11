@@ -1,4 +1,6 @@
-#/bin/env bash
+#!/usr/bin/env bash
+
+set -eu
 
 # I've never actually scripted in bash properly
 # so I apologize in advance for this mess
@@ -10,14 +12,15 @@ ext_dir="${script_dir}exts/"
 
 # Change to match your install dir
 transpiler="$(pwd)/sugarcon.py"
+pythonexe="/usr/bin/env python"
 
 # Clean up our leftover exts
-rm -f ${script_dir}exts/*.ext
+rm -f "${script_dir}"exts/*.ext
 
 # First pass of extern gen
-for f in $script_dir*.scon; do
+for f in "$script_dir"*.scon; do
   if [ -f "$f" ]; then 
-    python "$transpiler" "$f" -o "${ext_dir}$(basename ${f%.*}).ext" --generate-externs > /dev/null
+    $pythonexe "$transpiler" "$f" -o "${ext_dir}$(basename "${f%.*}").ext" --generate-externs > /dev/null
   fi
 done
 
@@ -26,11 +29,11 @@ done
 # deep calls, but we've had it set to 2 just as a safety measure
 passes=2
 
-for ((i = 0; i < $passes; i++)); do
-  for f in $script_dir*.scon; do
+for ((i = 0; i < passes; i++)); do
+  for f in "$script_dir"*.scon; do
     if [ -f "$f" ]; then 
-      python "$transpiler" "$f" \
-        -o "${ext_dir}$(basename ${f%.*}).ext" \
+      $pythonexe "$transpiler" "$f" \
+        -o "${ext_dir}$(basename "${f%.*}").ext" \
         --externs "${ext_dir}"*.ext \
         --generate-externs > /dev/null
     fi
@@ -38,10 +41,10 @@ for ((i = 0; i < $passes; i++)); do
 done
 
 # Write the final 
-for f in $script_dir*.scon; do
+for f in "$script_dir"*.scon; do
   if [ -f "$f" ]; then 
-    python "$transpiler" "$f" -o \
-      "${output_dir}$(basename ${f%.*}).con" \
+    $pythonexe "$transpiler" "$f" -o \
+      "${output_dir}$(basename "${f%.*}").con" \
       --externs "${ext_dir}"*.ext
   fi
 done

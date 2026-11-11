@@ -1,1 +1,1 @@
-sugarcon.py
+../sugarcon.py
